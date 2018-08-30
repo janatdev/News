@@ -1,10 +1,11 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Modern Business - @ViewBag.Title</title>
+    <title>KPMG News - @ViewBag.Title</title>
 
     <!-- Bootstrap -->
     <link href="@Url.Content("/css/bootstrap.css")" rel="stylesheet">
@@ -26,18 +27,39 @@
                     <span class="icon-bar"></span>
                 </button>
                 <!-- You'll want to use a responsive image option so this logo looks good on devices - I recommend using something like retina.js (do a quick Google search for it and you'll find it) -->
-                @Html.ActionLink("News", "Index", new { controller = "Home" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("KPMG News", "Index", new { controller = "Home" }, new { @class = "navbar-brand" })
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li id="about">
-                       @Html.ActionLink("About", "Index", "About")
+                        @Html.ActionLink("About", "Index", "About")
                     </li>
-                    <li id="services">
+                    
+                    <li id="blog">
+                        @Html.ActionLink("Creat News", "Create", "News")
+                    </li>
+                    <li id="blog" class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">News <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li id="bloghome2">
+                                @Html.ActionLink("For You", "My", "News")
+                            </li>
+                            <li id="bloghome1">
+                                @Html.ActionLink("News Home 1", "Home1", "Blog")
+                            </li>
+                            <li id="bloghome2">
+                                @Html.ActionLink("News Home 2", "Home2", "Blog")
+                            </li>
+                            <li id="blogpost">
+                                @Html.ActionLink("News Post", "Post", "Blog")
+                            </li>
+                        </ul>
+                    </li>
+                    @*<li id="services">
                         @Html.ActionLink("Services", "Index", "Services")
-                    </li>
+                    </li>*@
                     <li id="contact">
                         @Html.ActionLink("Contact", "Index", "Contact")
                     </li>
@@ -61,26 +83,12 @@
                             </li>
                         </ul>
                     </li>
-                    <li id="blog" class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Blog <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li id="bloghome1">
-                                @Html.ActionLink("Blog Home 1", "Home1", "Blog")
-                            </li>
-                            <li id="bloghome2">
-                                @Html.ActionLink("Blog Home 2", "Home2", "Blog")
-                            </li>
-                            <li id="blogpost">
-                                @Html.ActionLink("Blog Post", "Post", "Blog")
-                            </li>
-                        </ul>
-                    </li>
                     <li id="other" class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Other Pages <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li id="fullwidthpage">
+                            @*<li id="fullwidthpage">
                                 @Html.ActionLink("Full Width Page", "FullWidth", "Other")
-                            </li>
+                            </li>*@
                             <li id="sidebarpage">
                                 @Html.ActionLink("Sidebar Page", "Sidebar", "Other")
                             </li>
@@ -90,10 +98,11 @@
                             <li id="404">
                                 @Html.ActionLink("404", "FourOhFour", "Other")
                             </li>
-                            
+
                         </ul>
                     </li>
                 </ul>
+                @Html.Partial("_LoginPartial")
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -109,7 +118,7 @@
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; Company 2013</p>
+                    <p>Copyright &copy; 2018</p>
                 </div>
             </div>
         </footer>

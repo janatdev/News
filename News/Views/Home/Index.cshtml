@@ -1,6 +1,9 @@
-﻿@{
-    ViewBag.Title = "Home";
+﻿@using System.Linq
+@model News.Models.UpcomingPassedNewsViewModel
+@{
+    ViewBag.Title = "KPMG News";
 }
+@*@Html.Partial("_News")*@
 <div id="myCarousel" class="carousel slide">
     <!-- Indicators -->
     <ol class="carousel-indicators">
@@ -12,22 +15,28 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
         <div class="item active">
-            <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Slide One');"></div>
+            <div class="fill" style="background-image: url('http://placehold.it/1900x1080&text=Slide One');">
+                <a href="https://home.kpmg.com/uk/en/home/user/login.html?origin=external"><img class="fill" src="~/images/image2.png" height="100%" width="100%">image</a>
+            </div>
             <div class="carousel-caption">
-                <h1>Modern Business - A Bootstrap 3 Template</h1>
+                <h1>KPMG's New Prefrence Centre </h1>
             </div>
         </div>
         <div class="item">
-            <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Slide Two');"></div>
+            <div class="fill" style="background-image: url('http://placehold.it/1900x1080&text=Slide Two');">
+                <a href="https://home.kpmg.com/uk/en/home/user/login.html?origin=external"><img class="fill" src="~/images/slideimage1.png" height="100%" width="100%">image</a>
+            </div>
             <div class="carousel-caption">
-                <h1>Ready to Style &amp; Add Content</h1>
+                <h1>30 Voices on 2030 &amp; The Future of Financial Services</h1>
             </div>
         </div>
         <div class="item">
-            <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Slide Three');"></div>
+            <div class="fill" style="background-image: url('http://placehold.it/1900x1080&text=Slide Three');">
+                <a href="https://home.kpmg.com/uk/en/home/user/login.html?origin=external"><img class="fill" src="~/images/slideimage3.jpg" height="100%" width="100%">image</a>
+            </div>
             <div class="carousel-caption">
                 <h1>
-                    Additional Layout Options at <a href="http://startbootstrap.com">http://startbootstrap.com</a>
+                    Move with the times or be swept away <a href="https://home.kpmg.com/uk/en/home/insights/2018/04/changing-futures.html">Together we can make disruption work for you.</a>
                 </h1>
             </div>
         </div>
@@ -48,12 +57,28 @@
 
         <div class="row">
             <div class="col-lg-4 col-md-4">
-                <h3><i class="fa fa-check-circle"></i> Bootstrap 3 Built</h3>
+                <h3><i class="fa fa-check-circle"></i> Latest News</h3>
                 <p>The 'Modern Business' website template by <a href="http://startbootstrap.com">Start Bootstrap</a> is built with <a href="http://getbootstrap.com">Bootstrap 3</a>. Make sure you're up to date with latest Bootstrap documentation!</p>
+                @if (Model.LatestNews.Any())
+                {
+                    @Html.DisplayFor(x => x.LatestNews)
+                }
+                else
+                {
+                    <div class="col-md-4 col-sm-6 col-xs-12"> No Events </div>
+                }
             </div>
             <div class="col-lg-4 col-md-4">
-                <h3><i class="fa fa-pencil"></i> Ready to Style &amp; Edit</h3>
+                <h3><i class="fa fa-pencil"></i> Old News </h3>
                 <p>You're ready to go with this pre-built page structure, now all you need to do is add your own custom stylings! You can see some free themes over at <a href="http://bootswatch.com">Bootswatch</a>, or come up with your own using <a href="http://getbootstrap.com/customize/">the Bootstrap customizer</a>!</p>
+                @if (Model.OldNews.Any())
+                {
+                    @Html.DisplayFor(x => x.OldNews)
+                }
+                else
+                {
+                    <div class="col-md-4 col-sm-6 col-xs-12"> No Events </div>
+                }
             </div>
             <div class="col-lg-4 col-md-4">
                 <h3><i class="fa fa-folder-open"></i> Many Page Options</h3>

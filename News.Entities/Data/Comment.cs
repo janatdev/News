@@ -1,0 +1,34 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace News.Entities.Data
+{
+    public class Comment
+    {
+        public Comment()
+        {
+            this.Date = DateTime.Now;
+        }
+
+        public int Id { get; set; }
+
+        [Required]
+        public string Text { get; set; }
+
+        [Required]
+        public DateTime Date { get; set; }
+
+        public string AuthorId { get; set; }
+
+        public virtual ApplicationUser Author { get; set; }
+
+        public int NewsId { get; set; }
+
+        [Required]
+        public virtual News News { get; set; }
+    }
+}

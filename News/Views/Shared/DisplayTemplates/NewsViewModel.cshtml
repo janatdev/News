@@ -1,0 +1,43 @@
+﻿@model News.Models.NewsViewModel
+
+<div class="news-box">
+    <h2>Eating three chocolate bars a month can reduce risk of heart failure, study claims!</h2>
+    <span class="date">29/08/2018 01:29:53</span>
+    <span class="duration">
+        (01:30 hours)
+    </span>
+    <div id="news-details-1">
+        <a class="btn btn-default" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#news-details-1" href="/Home/NewsDetailsById/1">View Details &gt;&gt;</a>
+    </div>
+</div>
+
+
+<div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="news-box">
+        <h2>@Model.Title</h2>
+        <span class="date">@Model.StartDateTime</span>
+        @if (Model.Duration != null)
+        {
+            <span class="duration">
+                (@Model.Duration.Value.ToString(@"hh\:mm") hours)
+            </span>
+        }
+        @if (Model.Author != null)
+        {
+            <div class="author">Author: @Model.Author</div>
+        }
+        @if (Model.Location != null)
+        {
+            <div class="location">Location: @Model.Location</div>
+        }
+        <div id="news-details-@Model.Id">
+            @Ajax.ActionLink("View Details >>", "NewsDetailsById", "Home", 
+                new {id=Model.Id},
+                new AjaxOptions
+                {
+                    InsertionMode = InsertionMode.Replace,
+                    UpdateTargetId = "news-details-" + Model.Id
+                }, new {@class = "btn btn-default"})
+        </div>
+    </div>
+</div>
