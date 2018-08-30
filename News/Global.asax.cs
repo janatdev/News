@@ -1,5 +1,6 @@
 ﻿using News.Entities;
 using News.Entities.Migrations;
+using News.Entities.Data;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

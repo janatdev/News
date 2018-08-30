@@ -176,7 +176,6 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommentViewModel.cs" />
     <Compile Include="Models\CreateNewsModel.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\NewsDetailsViewModel.cs" />
     <Compile Include="Models\NewsViewModel.cs" />

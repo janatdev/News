@@ -42,14 +42,14 @@ namespace News.Entities.Migrations
             context.Newses.Add(new Data.News()
             {
                 Title = "NASA chief says US rockets will launch astronauts from US next year",
-                StartDateTime = DateTime.Now.AddDays(4).AddHours(20).AddMinutes(30),
+                StartDateTime = DateTime.Now.AddDays(4).AddHours(10).AddMinutes(30),
                 Author = context.Users.First(),
             });
 
             context.Newses.Add(new Data.News()
             {
                 Title = "Climate change will make hundreds of millions more people nutrient deficient",
-                StartDateTime = DateTime.Now.AddDays(4).AddHours(20).AddMinutes(30),
+                StartDateTime = DateTime.Now.AddDays(7).AddHours(20).AddMinutes(30),
             });
 
             context.Newses.Add(new Data.News()
@@ -59,8 +59,19 @@ namespace News.Entities.Migrations
                 Duration = TimeSpan.FromHours(1.5),
                 Comments = new HashSet<Comment>()
                 {
-                    new Comment() {Text = "Comment 1"},
-                    new Comment() {Text = "Comment 2", Author = context.Users.First()}
+                    new Comment() {Text = "<Unknown> Comment : not registerd user commented on this news post."},
+                    new Comment() {Text = "User Comment: Registered user commented on this post.", Author = context.Users.First()}
+                }
+            });
+
+            context.Newses.Add(new Data.News()
+            {
+                Title = "Eating Ten chocolate bars a month can reduce risk of heart failure, study claims!",
+                StartDateTime = DateTime.Now.AddDays(-4).AddHours(10).AddMinutes(30),
+                Duration = TimeSpan.FromHours(3.5),
+                Comments = new HashSet<Comment>()
+                {
+                    new Comment() {Text = "<Unknown> Comment : not registerd user commented on this news post."}                    
                 }
             });
         }
