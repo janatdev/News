@@ -26,5 +26,7 @@ namespace News.Models
 
         [Display(Name = "Is Public")]
         public bool IsPublic { get; set; }
+
+
     }
 }

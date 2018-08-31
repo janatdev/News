@@ -8,6 +8,7 @@ using News.Entities;
 
 namespace News.Controllers
 {
+    [ValidateInput(false)]
     public class BaseController : Controller
     {
         protected ApplicationDbContext context = new ApplicationDbContext();

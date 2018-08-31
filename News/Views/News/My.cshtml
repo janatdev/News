@@ -1,24 +1,17 @@
-﻿
-
-@{
+﻿@{
     ViewBag.Title = "For You";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container">
-<div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">
-            @ViewBag.Title
-
-        </h1>
+    <div class="row">
+        <div>        
+            @Html.Partial("_News")
+        </div>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-lg-4 col-md-4">
-        <h3><i class="fa fa-check-circle"></i> Latest News</h3>
-
-        @Html.Partial("_News")
-    </div>
-</div>
+@section scripts
+{
+    @Scripts.Render("~/bundles/ajax")
+}

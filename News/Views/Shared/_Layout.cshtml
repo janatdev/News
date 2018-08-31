@@ -33,10 +33,6 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li id="about">
-                        @Html.ActionLink("About", "Index", "About")
-                    </li>
-                    
                     <li id="blog">
                         @Html.ActionLink("Creat News", "Create", "News")
                     </li>
@@ -57,12 +53,8 @@
                             </li>
                         </ul>
                     </li>
-                    @*<li id="services">
-                        @Html.ActionLink("Services", "Index", "Services")
-                    </li>*@
-                    <li id="contact">
-                        @Html.ActionLink("Contact", "Index", "Contact")
-                    </li>
+                    @*<li id="services">@Html.ActionLink("Services", "Index", "Services")</li>*@
+
                     <li id="portfolio" class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Portfolio <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -87,8 +79,8 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Other Pages <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             @*<li id="fullwidthpage">
-                                @Html.ActionLink("Full Width Page", "FullWidth", "Other")
-                            </li>*@
+                    @Html.ActionLink("Full Width Page", "FullWidth", "Other")
+                </li>*@
                             <li id="sidebarpage">
                                 @Html.ActionLink("Sidebar Page", "Sidebar", "Other")
                             </li>
@@ -101,8 +93,14 @@
 
                         </ul>
                     </li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+                    <li id="about">
+                        @Html.ActionLink("About", "Index", "About")
+                    </li>
+                    <li id="contact">
+                        @Html.ActionLink("Contact", "Index", "Contact")
+                    </li>
+                    @Html.Partial("_LoginPartial")
+                </ul>                
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -129,5 +127,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="@Url.Content("/js/bootstrap.js")"></script>
     <script src="@Url.Content("/js/modern-business.js")"></script>
+    @RenderSection("scripts", required:false)
 </body>
 </html>

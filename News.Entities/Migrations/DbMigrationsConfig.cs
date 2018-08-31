@@ -25,7 +25,7 @@ namespace News.Entities.Migrations
             var adminUserName = adminEmail;
             var adminPassword = adminEmail;
             string adminRole = "Administrator";
-
+            
             //CreateAdminUser(context, adminEmail, adminUserName, adminFullName, adminPassword, adminRole);
             //CreateSeveralNews(context);
         }

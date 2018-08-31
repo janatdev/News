@@ -1,38 +1,54 @@
 ﻿@using System.Linq
 @model News.Models.NewsDetailsViewModel
 
-@if (Model.Description != null)
-{
-    <div>
-        <div class="description"> Description: @Model.Description</div>
+@{
+    ViewBag.Title = "News Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            @ViewBag.Title
+
+        </h1>
     </div>
-}
+</div>
 
-@if (Model.Comments.Any())
-{
-    @:Comments:
-    <ul>
-        @foreach (var comment in Model.Comments)
-        {
-            <li>
-                @comment.Text
-                @if (@comment.Author != null)
-                {
-                    @: (by @comment.Author)
-                }
-            </li>
-        }
-    </ul>
-}
-else
-{
-    <p> No Comments for this news post.</p>
-}
+            @if (Model.Description != null)
+            {
+                <div>
+                    <div class="description"> Description: @Model.Description</div>
+                </div>
+            }
 
-@if (ViewBag.CanEdit)
-{
-    @Html.ActionLink("Edit", "Edit", "News", new {id = Model.Id}, new {@class = "btn btn-default"})
-    <span></span>
-    @Html.ActionLink("Delete", "Delete", "News", new {id = Model.Id}, new {@class = "btn btn-default"})
-}
+            @if (Model.Comments.Any())
+            {
+                @:Comments:
+                <ul>
+                    @foreach (var comment in Model.Comments)
+                    {
+                        <li>
+                            @comment.Text
+                            @if (@comment.Author != null)
+                            {
+                                @: (by @comment.Author)
+                            }
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p> No Comments for this news post.</p>
+            }
 
+            @*@if (ViewBag.CanEdit)*@
+            @Html.ActionLink("Edit", "Edit", "News", new { id = Model.Id }, new { @class = "btn btn-default" })
+            <span></span>
+            @Html.ActionLink("Delete", "Delete", "News", new { id = Model.Id }, new { @class = "btn btn-default" })
+
+
+
+</div>

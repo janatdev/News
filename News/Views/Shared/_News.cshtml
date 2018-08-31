@@ -2,32 +2,29 @@
 @using System.Linq
 @model News.Models.UpcomingPassedNewsViewModel
 
-<h1 class="news-group-heading">Latest News</h1>
+<h1 class="news-group-heading">KPMG News</h1>
 
 <div class="row">
     <div class="col-lg-4 col-md-4">
-        <h3><i class="fa fa-check-circle"></i> Latest News</h3>
+        <h3><i class="fa fa-check-circle"></i> Latest News</h3>                
         @if (Model.LatestNews.Any())
         {
             @Html.DisplayFor(x => x.LatestNews)
         }
         else
         {
-            <div class="col-md-4 col-sm-6 col-xs-12"> No Events </div>
+            <div> No Events </div>
         }
     </div>
-</div>
-
-<div class="row">
     <div class="col-lg-4 col-md-4">
-        <h3><i class="fa fa-check-circle"></i> Latest News</h3>
+        <h3><i class="fa fa-pencil"></i> Old News </h3>                
         @if (Model.OldNews.Any())
         {
             @Html.DisplayFor(x => x.OldNews)
         }
         else
         {
-            <div class="col-md-4 col-sm-6 col-xs-12"> No Events </div>
+            <div> No Latest News available. </div>
         }
     </div>
 </div>
