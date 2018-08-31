@@ -8,3 +8,6 @@ Entity Framework
 Bootstrap
 JQuery
 AJAX
+
+
+working branch is JI_News
