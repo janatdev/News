@@ -3,6 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-4 col-md-4">
+            @*<img src="~/images/image1.jpg" width="50%" height="40%" />*@
             <h5>@Model.Title</h5>
             <span class="date">@Model.StartDateTime</span>
             @if (Model.Duration != null)
@@ -13,22 +14,23 @@
             }
             @if (Model.Author != null)
             {
-                <div class="author">Author: @Model.Author</div>
+                <div class="author"><b>Author:</b> @Model.Author</div><span></span>
             }
             @if (Model.Location != null)
             {
                 <div class="location">Location: @Model.Location</div>
             }
-        
+
             <div id="news-details-@Model.Id">
                 @Ajax.ActionLink("Read More....", "NewsDetailsById", "Home",
-                    new {id=Model.Id},
+                    new {id = Model.Id},
                     new AjaxOptions
                     {
                         InsertionMode = InsertionMode.Replace,
                         UpdateTargetId = "news-details-" + Model.Id
-                    }, new {@class = "btn btn-default"})
-            </div>            
-        </div>
+                    }, new {@class = "btn btn-primary"})
+                <img class="btn" src="~/images/like.png" height="55px;" width="55px;"/>
+                </div>            
+        </div>        
     </div>
 </div>

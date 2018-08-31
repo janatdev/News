@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using News.Entities;
+using News.Entities.Data;
 using News.Models;
 
 namespace News.Controllers
@@ -14,6 +15,24 @@ namespace News.Controllers
     [Authorize]
     public class NewsController : BaseController
     {
+        public ActionResult Index()
+        {
+            return RedirectToAction("My");
+        }
+
+        public ActionResult List()
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var listNewses = context
+                    .Newses
+                    .Include(p => p.Author)
+                    .ToList();
+
+                return View(listNewses);
+            }
+        }
+
         // GET: News
         public ActionResult Create()
         {
@@ -142,12 +161,6 @@ namespace News.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-           /* var newses = context.Newses
-                .Where(p => p.Id == id)
-                .Include(p => p.Author)
-                .Include(p => p.Comments)
-                .First();
-                */
             var newses = context.Newses.First(x => x.Id == id);
 
             if (newses != null)
@@ -159,6 +172,24 @@ namespace News.Controllers
             return RedirectToAction("My");
         }
 
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Comment(int newsId, string message, string authorId)
+        {            
+            var newses = context.Newses.First(x => x.Id == newsId);
+            Comment comment = new Comment();
+            comment.NewsId = (System.Int32) newsId;
+            comment.AuthorId = authorId.ToString();
+            comment.Date = DateTime.Now;            
+            comment.Text = message;            
+
+            context.Comments.Add(comment);
+            context.SaveChanges();
+            return RedirectToAction("");
+        }
+
         protected override void Dispose(bool disposing)
         {
             
@@ -168,5 +199,6 @@ namespace News.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }
