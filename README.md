@@ -1,6 +1,8 @@
 # News
 News Site Using MVC 5, Entity Framework, BootStrap, SQL
 
+User name: admin@admin.com
+Password: admin@admin.com
 
 News Site Using MVC 5, Entity Framework, BootStrap, SQL.
 
