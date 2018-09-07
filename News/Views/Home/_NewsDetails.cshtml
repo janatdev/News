@@ -18,9 +18,9 @@
 
     @if (Model.Description != null)
     {
-        <div>   
-            <div><h3>Title: @Model.Title</h3></div><br/>
-            <div><b>Description:</b> @Model.Description</div><br/>  
+        <div>
+            <div><h3>Title: @Model.Title</h3></div><br />
+            <div><b>Description:</b> @Model.Description</div><br />
             <div><b>Author Name:</b> @Model.AuthorName</div>
         </div>
     }
@@ -35,8 +35,8 @@
                     @comment.Text
                     @if (@comment.Author != null)
                     {
-                         @: (by @comment.Author)
-                        @comment.Text                                                              
+                        @: (by @comment.Author)
+                        @comment.Text
                     }
                 </li>
             }
@@ -46,31 +46,29 @@
     {
         <p> No Comments for this news post.</p>
     }
-           
 
-    @*@if (ViewBag.CanEdit)*@
-    @Html.ActionLink("Edit", "Edit", "News", new { id = Model.Id }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Edit", "Edit", "News", new { @id = Model.Id }, new { @class = "btn btn-primary" })
     <span></span>
     @Html.ActionLink("Delete", "Delete", "News", new { id = Model.Id }, new { @class = "btn btn-primary" })
-               
-    
-    
-    
-    <div class="col-md-12">                        
+
+    @Html.ActionLink("Likes " + @Model.Likes, "Likes", "News", new { id = Model.Id }, new {@class = "text-justify"})
+
+
+    <div class="col-md-12">
         @if (User.Identity.IsAuthenticated)
         {
             <div class="comment-editor">
-                @using (Html.BeginForm("Comment","News",FormMethod.Post))
+                @using (Html.BeginForm("Comment", "News", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
 
                     <div class="form-horizontal">
                         <h4>Add Comment</h4>
                         @*<b> @Model.AuthorName</b><br />*@
-                        <b>@User.Identity.Name</b><br/>
+                        <b>@User.Identity.Name</b><br />
 
-                        <input type="hidden" value="@Model.Id" name="newsId"/>
-                        <input type="hidden" value="@User.Identity.GetUserId()" name="authorId"/>
+                        <input type="hidden" value="@Model.Id" name="newsId" />
+                        <input type="hidden" value="@User.Identity.GetUserId()" name="authorId" />
                         <div class="form-group">
                             <div class="col-sm-6">
                                 <textarea class="form-control text-box multi-line" id="Message" name="Message" rows="3"></textarea>
@@ -79,7 +77,7 @@
 
                         <div class="form-group">
                             <div class="col-sm-6">
-                                <input type="submit" value="Submit" class="btn btn-primary"/>
+                                <input type="submit" value="Submit" class="btn btn-primary" />
                             </div>
                         </div>
                     </div>

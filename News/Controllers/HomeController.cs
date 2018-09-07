@@ -17,11 +17,13 @@ namespace News.Controllers
 
             var upcomingNews = newses.Where(e => e.StartDateTime > DateTime.Now);
             var pastNews = newses.Where(e => e.StartDateTime <= DateTime.Now);
+            var popNews = newses.Where(e => e.Likes > 3);
 
             return View(new UpcomingPassedNewsViewModel()
             {
                 LatestNews = upcomingNews,
-                OldNews = pastNews
+                OldNews = pastNews,
+                PopularNews = popNews
             });
         }
 

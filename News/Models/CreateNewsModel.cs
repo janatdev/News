@@ -13,6 +13,8 @@ namespace News.Models
         [Display(Name = "Title*")]
         public string Title { get; set; }
 
+        public int Id { get; set; }
+
         [DataType(DataType.DateTime)]
         [Display(Name = "Date and Time")]
         public DateTime StartDateTime { get; set; }
@@ -27,6 +29,8 @@ namespace News.Models
         [Display(Name = "Is Public")]
         public bool IsPublic { get; set; }
 
+        public int Likes { get; set; }
 
+        public string AuthorId { get; set; }
     }
 }

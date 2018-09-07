@@ -11,7 +11,7 @@ namespace News.Models
         public TimeSpan? Duration { get; set; }
         public string Author { get; set; }
         public string Location { get; set; }
-
+        public int Likes { get; set; }
         public static Expression<Func<Entities.Data.News, NewsViewModel>> ViewModel
         {
             get
@@ -23,7 +23,8 @@ namespace News.Models
                     StartDateTime = e.StartDateTime,
                     Duration = e.Duration,
                     Author = e.Author.FullName,
-                    Location = e.Location
+                    Location = e.Location,
+                    Likes = e.Likes
                 };
             }
         }

@@ -40,5 +40,7 @@ namespace News.Entities.Data
         public bool IsPublic { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
+
+        public int Likes { get; set; }
     }
 }

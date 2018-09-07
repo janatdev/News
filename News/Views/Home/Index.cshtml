@@ -60,7 +60,7 @@
                 <h3><i class="fa fa-check-circle"></i> Latest News</h3>
                 @if (Model.LatestNews.Any())
                 {
-                    @Html.DisplayFor(x => x.LatestNews)
+                    @Html.DisplayFor(x => x.LatestNews)                    
                 }
                 else
                 {
@@ -76,11 +76,19 @@
                 else
                 {
                     <div> No Old News availabke </div>
-                }                
+                }
+                
             </div>
             <div class="col-lg-4 col-md-4">
                 <h3><i class="fa fa-folder-open"></i> Popular News</h3>
-                @*@Html.Partial("_News")*@
+                @if (Model.PopularNews.Any())
+                {
+                    @Html.DisplayFor(x => x.PopularNews)
+                }
+                else
+                {
+                    <div> No Popular News Available. </div>
+                }
             </div>
         </div>
         <!-- /.row -->

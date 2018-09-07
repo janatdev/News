@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -14,10 +15,11 @@ namespace News.Controllers
 {
     [Authorize]
     public class NewsController : BaseController
-    {
-        public ActionResult Index()
+    {      
+        public async Task<ActionResult> Index()
         {
-            return RedirectToAction("My");
+            var news = context.Newses.Include(n => n.Author);
+            return View(await news.ToListAsync());
         }
 
         public ActionResult List()
@@ -33,142 +35,130 @@ namespace News.Controllers
             }
         }
 
-        // GET: News
+        public async Task<ActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var news = await context.Newses.FirstOrDefaultAsync(x=>x.Id== id);
+            if (news == null)
+            {
+                return HttpNotFound();
+            }
+            return View(news);
+        }
+
+        // GET: NewsPage/Create
         public ActionResult Create()
         {
+            ViewBag.AuthorId = new SelectList(context.Users, "Id", "FullName");
             return View();
         }
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CreateNewsModel model)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Title,StartDateTime,Duration,AuthorId,Description,Location,IsPublic,Likes")] Entities.Data.News news)
         {
-            if (model != null && this.ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var e = new Entities.Data.News()
-                {
-                    AuthorId = this.User.Identity.GetUserId(),
-                    Title = model.Title,
-                    StartDateTime = model.StartDateTime,
-                    Duration = model.Duration,
-                    Description = model.Description,
-                    Location = model.Location,
-                    IsPublic = model.IsPublic
-                };
-
-                this.context.Newses.Add(e);
-                this.context.SaveChanges();                
-                return this.RedirectToAction("My");
+                context.Newses.Add(news);
+                await context.SaveChangesAsync();
+                return RedirectToAction("My");
             }
 
-            return this.View(model);
+            ViewBag.AuthorId = new SelectList(context.Users, "Id", "FullName", news.AuthorId);
+            return View(news);
+        }
+              
+        public async Task<ActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var news = await context.Newses.FirstOrDefaultAsync(x=>x.Id==id);
+            if (news == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.AuthorId = new SelectList(context.Users, "Id", "FullName", news.AuthorId);
+            return View(news);
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,StartDateTime,Duration,AuthorId,Description,Location,IsPublic,Likes")] Entities.Data.News news)
+        {
+            if (ModelState.IsValid)
+            {
+                context.Entry(news).State = EntityState.Modified;
+                await context.SaveChangesAsync();
+                return RedirectToAction("My");
+            }
+            ViewBag.AuthorId = new SelectList(context.Users, "Id", "FullName", news.AuthorId);
+            return View(news);
         }
 
-        
+
+        // GET: NewsPage/Delete/5
+        public async Task<ActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var news = await context.Newses.FirstOrDefaultAsync(x=>x.Id == id);
+            if (news == null)
+            {
+                return HttpNotFound();
+            }
+            return View(news);
+        }
+
+        // POST: NewsPage/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int id)
+        {
+            var news = await context.Newses.FirstOrDefaultAsync(x=>x.Id == id);
+            context.Newses.Remove(news);
+            await context.SaveChangesAsync();
+            return RedirectToAction("My");
+        }
+
         public ActionResult My()
         {
             string currentUserId = this.User.Identity.GetUserId();
-            var newes = this.context.Newses.Where(e => e.AuthorId == currentUserId)
-                .OrderBy(e => e.StartDateTime).Select(NewsViewModel.ViewModel);
 
-            var upCommingNews = newes.Where(e => e.StartDateTime > DateTime.Now);
-                var pastNews = newes.Where(e => e.StartDateTime <= DateTime.Now);
+            var newes = this.context.Newses
+                .Where(e => e.AuthorId == currentUserId)
+                .OrderBy(e => e.StartDateTime)
+                .Select(NewsViewModel.ViewModel);
+
+            var upCommingNews = newes.Where(e => e.StartDateTime >= DateTime.Now);
+            var pastNews = newes.Where(e => e.StartDateTime <= DateTime.Now);
+            var popNews = newes.Where(e => e.Likes > 3);
+
             return View(new UpcomingPassedNewsViewModel()
             {
                 LatestNews = upCommingNews,
-                OldNews = pastNews
+                OldNews = pastNews,
+                PopularNews = popNews
             });
         }
 
-        [HttpGet]
-        public ActionResult Edit(int id)
+
+        public ActionResult Likes(int? id)
         {
-            var newstoEdit = this.LoadNews(id);
-            if (newstoEdit == null)
-            {
-                return this.RedirectToAction("My");
-            }
-
-            //var model = CreateNewsModel.CreateFromNews(newstoEdit);
-            return this.View(newstoEdit);
-        }
-
-        private Entities.Data.News LoadNews(int id)
-        {
-            var currentUserId = this.User.Identity.GetUserId();
-            var isAdmin = this.IsAdmin();
-            var newsToEdit = this.context.Newses
-                .Where(e => e.Id == id)
-                .FirstOrDefault(e => e.AuthorId == currentUserId || isAdmin);
-            return newsToEdit;
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, CreateNewsModel model)
-        {
-            var newsToEdit = this.LoadNews(id);
-            if (newsToEdit == null)
-            {
-                return this.RedirectToAction("My");
-            }
-
-            if (model != null && this.ModelState.IsValid)
-            {
-                newsToEdit.Title = model.Title;
-                newsToEdit.StartDateTime = model.StartDateTime;
-                newsToEdit.Duration = model.Duration;
-                newsToEdit.Description = model.Description;
-                newsToEdit.Location = model.Location;
-                newsToEdit.IsPublic = model.IsPublic;
-
-                this.context.SaveChanges();
-                return this.RedirectToAction("My");
-            }
-
-            return this.View(model);
-        }
-
-        [HttpGet]
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
+            var newses = context.Newses.FirstOrDefault(a => a.Id == id);
+            if (newses == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            using (context = new ApplicationDbContext())
-            {
-                var news = context.Newses.Where(e => e.Id == id);
-
-                if (news != null)
-                {
-                    return View(news);
-                }
-                else
-                {
-                    return HttpNotFound();
-                }                
-            }            
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            var newses = context.Newses.First(x => x.Id == id);
-
-            if (newses != null)
-            {
-                context.Newses.Remove(newses);
-                context.SaveChanges();
-            }
-            
+            newses.Likes += 1;
+            this.context.SaveChanges();
             return RedirectToAction("My");
         }
 
@@ -190,15 +180,14 @@ namespace News.Controllers
             return RedirectToAction("");
         }
 
+
         protected override void Dispose(bool disposing)
         {
-            
             if (disposing)
             {
                 context.Dispose();
             }
             base.Dispose(disposing);
         }
-
     }
 }

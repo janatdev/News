@@ -17,6 +17,8 @@ namespace News.Models
         public string AuthorId { get; set; }
         public IEnumerable<CommentViewModel> Comments { get; set; }
 
+        public int Likes { get; set; }
+
         public static Expression<Func<Entities.Data.News, NewsDetailsViewModel>> ViewModel
         {
             get
@@ -28,7 +30,8 @@ namespace News.Models
                     AuthorName = e.Author.FullName,
                     Description = e.Description,
                     Comments = e.Comments.AsQueryable().Select(CommentViewModel.ViewModel),
-                    AuthorId = e.Author.Id                    
+                    AuthorId = e.Author.Id,      
+                    Likes = e.Likes
                 };
             }
         }       
